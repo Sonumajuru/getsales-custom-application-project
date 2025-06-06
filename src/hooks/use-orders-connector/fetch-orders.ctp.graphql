@@ -1,5 +1,9 @@
 query FetchOrders($limit: Int!, $offset: Int!) {
-  orders(limit: $limit, offset: $offset) {
+  orders(
+    limit: $limit
+    offset: $offset
+    where: "orderState=\"Complete\" and shipmentState=\"Shipped\""
+  ) {
     count
     total
     offset
