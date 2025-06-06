@@ -2,6 +2,7 @@ import type { JSX, ReactElement } from 'react';
 import { useFormik, type FormikHelpers } from 'formik';
 import { useIntl } from 'react-intl';
 import TextField from '@commercetools-uikit/text-field';
+import Text from '@commercetools-uikit/text';
 import Spacings from '@commercetools-uikit/spacings';
 import SelectField from '@commercetools-uikit/select-field';
 import type { TFormValues } from '../../types';
@@ -39,6 +40,7 @@ const OrderDetailsForm = (props: TOrderDetailsFormProps) => {
 
   const formElements = (
     <Spacings.Stack scale="l">
+      <Text.Headline as="h1"> {formik.values.orderNumber} </Text.Headline>
       <TextField
         name="orderId"
         title={intl.formatMessage(messages.orderIDLabel)}

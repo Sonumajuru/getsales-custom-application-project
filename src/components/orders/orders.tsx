@@ -15,6 +15,7 @@ import { BackIcon } from '@commercetools-uikit/icons';
 import FlatButton from '@commercetools-uikit/flat-button';
 import LoadingSpinner from '@commercetools-uikit/loading-spinner';
 import DataTable from '@commercetools-uikit/data-table';
+import CheckboxInput from '@commercetools-uikit/checkbox-input';
 import { ContentNotification } from '@commercetools-uikit/notifications';
 import { Pagination } from '@commercetools-uikit/pagination';
 import Spacings from '@commercetools-uikit/spacings';
@@ -25,8 +26,9 @@ import { useOrdersFetcher } from '../../hooks/use-orders-connector';
 import { getErrorMessage } from '../../helpers';
 import messages from './messages';
 import OrderDetails from '../order-details';
+import { useState } from 'react';
 
-const columns = [
+const columnsBase = [
   { key: 'orderNumber', label: 'Order Number', isSortable: true },
   { key: 'customerEmail', label: 'Customer Email' },
   { key: 'totalPrice', label: 'Total Price' },
@@ -49,6 +51,32 @@ const Orders = (props: TOrdersProps) => {
     perPage,
     tableSorting,
   });
+
+  const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
+
+  const toggleRowSelection = (id: string) => {
+    setSelectedRowIds((prev) =>
+      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    );
+  };
+
+  const columns = [
+    {
+      key: 'checkbox',
+      label: '',
+      align: 'center' as const,
+      disableResizing: true,
+      shouldIgnoreRowClick: true,
+      renderItem: (row: NonNullable<TOrderQueryResult['results']>[0]) => (
+        <CheckboxInput
+          name={`checkbox-${row.id}`}
+          isChecked={selectedRowIds.includes(row.id)}
+          onChange={() => toggleRowSelection(row.id)}
+        />
+      ),
+    },
+    ...columnsBase,
+  ];
 
   if (error) {
     return (
