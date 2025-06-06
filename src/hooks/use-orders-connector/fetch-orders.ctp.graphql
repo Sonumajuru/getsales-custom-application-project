@@ -1,0 +1,23 @@
+query FetchOrders($limit: Int!, $offset: Int!) {
+  orders(limit: $limit, offset: $offset) {
+    count
+    total
+    offset
+    results {
+      id
+      orderNumber
+      customerEmail
+      customer {
+        firstName
+        lastName
+      }
+      orderState
+      paymentState
+      createdAt
+      totalPrice {
+        centAmount
+        currencyCode
+      }
+    }
+  }
+}

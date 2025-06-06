@@ -1,0 +1,18 @@
+query FetchOrderById($orderId: String!) {
+  order(id: $orderId) {
+    id
+    orderNumber
+    customerEmail
+    customer {
+      firstName
+      lastName
+    }
+    orderState
+    paymentState
+    createdAt
+    totalPrice {
+      centAmount
+      currencyCode
+    }
+  }
+}
